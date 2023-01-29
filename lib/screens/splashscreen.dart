@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:admin/screens/home.dart';
 import 'package:admin/screens/login.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class splashscreen extends StatefulWidget {
   const splashscreen({Key? key}) : super(key: key);
@@ -13,11 +15,31 @@ class splashscreen extends StatefulWidget {
   State<splashscreen> createState() => _splashscreenState();
 }
 
+String? check;
+
 class _splashscreenState extends State<splashscreen> {
 
+
+    // PREFRENCES VALUES //
+   Future getchecklogin() async
+   {
+     final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+     var login = sharedPreferences.getString('loginuser');
+     setState(() {
+       check = login;
+     });
+     print(check);
+   }
+
+
+  // VALUE GET WHN PAGE LOAD //
   void initState()
   {
-    Timer(Duration(seconds: 5), () {Navigator.push(context, MaterialPageRoute(builder: (context)=>loginsscreen()));});
+    getchecklogin()
+    .whenComplete((){
+      Timer(Duration(seconds: 5), ()=> Navigator.push(context, MaterialPageRoute(builder: (context)=> check == null ? loginsscreen() : home()))
+      );
+    });
     super.initState();
   }
 
@@ -40,8 +62,7 @@ class _splashscreenState extends State<splashscreen> {
 
 
     );
-  }
-}
+  }}
 
 
 

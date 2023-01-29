@@ -9,8 +9,9 @@ class button extends StatefulWidget {
   Color txtcolor;
   double height;
   double widtht;
+  String btnval;
 
-  button({Key? key , required this.onpress , required this.txtcolor , required this.btncolor , required this.height , required this.widtht}) : super(key: key);
+  button({Key? key , required this.onpress , required this.txtcolor , required this.btncolor , required this.height , required this.widtht , required this.btnval}) : super(key: key);
 
   @override
   State<button> createState() => _buttonState();
@@ -30,7 +31,7 @@ class _buttonState extends State<button> {
           alignment: Alignment.center,
           height: 50.0,
           width: 200.0,
-          child: Text("Login",
+          child: Text(widget.btnval,
           style: TextStyle(
             fontSize: 20.0,
             color: widget.txtcolor,
@@ -68,23 +69,56 @@ class _button2State extends State<button2> {
       width: widget.widtht,
       height: widget.height,
       child: ElevatedButton.icon(
-          onPressed: widget.onpress,
-          icon:Image.network("https://www.freepnglogos.com/uploads/new-google-logo-transparent--14.png"),
-          label: Text("SIGN-UP" ,
+        onPressed: widget.onpress,
+        icon: Icon(Icons.add),
+        label: Text("SIGN-UP",
           style: TextStyle(
             color: widget.txtcolor,
           ),
+        ),
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.all(6),
+          primary: widget.btncolor,
+          side: BorderSide(width: 3, color: widget.btncolor),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30)
           ),
-          style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.all(6),
-            primary: widget.btncolor,
-            side: BorderSide( width:3 , color: widget.btncolor),
-            shape: RoundedRectangleBorder(
-                borderRadius : BorderRadius.circular(30)
-            ),
-          ),
+        ),
       ),
     );
-
   }
 }
+
+
+// TEXT BUTTON //
+
+class button3 extends StatefulWidget {
+
+  GestureTapCallback onpress;
+  String btnval;
+  Color txtcolor;
+
+
+  button3({Key? key , required this.onpress , required this.btnval , required this.txtcolor}) : super(key: key);
+
+  @override
+  State<button3> createState() => _button3State();
+}
+
+class _button3State extends State<button3> {
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      style: TextButton.styleFrom(
+        primary: widget.txtcolor,
+      ),
+        onPressed: widget.onpress,
+        child: Text(widget.btnval)
+    );
+  }
+}
+
+/*   Image.network(
+            "https://www.freepnglogos.com/uploads/new-google-logo-transparent--14.png"),
+
+       */
