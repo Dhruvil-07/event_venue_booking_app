@@ -1,7 +1,8 @@
 import 'dart:async';
-
 import 'package:admin/authentication/signinauth.dart';
+import 'package:admin/screens/forgetpwd.dart';
 import 'package:admin/screens/home.dart';
+import 'package:admin/screens/phoneauth.dart';
 import 'package:admin/screens/signup.dart';
 import 'package:admin/widget/button.dart';
 import 'package:admin/widget/snackbar.dart';
@@ -12,7 +13,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../model/loginmodel.dart';
 
 class loginsscreen extends StatefulWidget {
@@ -136,6 +136,24 @@ class _loginsscreenState extends State<loginsscreen>  {
   }
 
 
+
+  // Forget Password Navgation //
+
+  fpwdnav() async
+  {
+    if(signupuser == null)
+    {
+      showsnakbar(context, "Sign up First", Colors.cyan, Colors.black);
+    }
+    else if(signupuser != null && reguser == null)
+    {
+      showsnakbar(context, "Registration step Incomplete", Colors.cyan, Colors.black);
+    }
+    else
+    {
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>phoneauth()));
+    }
+  }
 
 
   // Init method for value when page is load //
@@ -314,7 +332,10 @@ class _loginsscreenState extends State<loginsscreen>  {
 
                         Padding(
                           padding: const EdgeInsets.only(top: 10.0 , left: 260.0),
-                          child: button3(btnval: 'Forget Password ?' , txtcolor: Colors.black , onpress: (){ logout();}),
+                          child: button3(btnval: 'Forget Password ?' , txtcolor: Colors.black ,
+                              onpress: (){
+                                fpwdnav();
+                             }),
                         ),
 
 
@@ -323,7 +344,7 @@ class _loginsscreenState extends State<loginsscreen>  {
                         padding: const EdgeInsets.only( top: 35.0 , left: 120.0 , right: 30.0 ),
                         child: button(onpress: ()
                         {
-                           logincheck();
+                          logincheck();
                         }
                         , btncolor: Colors.black , txtcolor: Colors.cyan , height: 50.0 , widtht: 200.0 , btnval: 'Login'),
                       ),
