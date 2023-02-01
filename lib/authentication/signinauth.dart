@@ -23,6 +23,7 @@ googlelogin(BuildContext context) async
 
         final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
         await sharedPreferences.setString('signupuser', userdata.idToken.toString());
+
       } )
           .whenComplete((){
 

@@ -23,6 +23,7 @@ class loginmodel
   // data to firebase //
   Map<String,dynamic> tomap(){
     return{
+      'uid':uid,
       'email' : email,
       'password':password,
       'phoneno' : phoneno,

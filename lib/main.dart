@@ -1,5 +1,6 @@
 import 'package:admin/screens/forgetpwd.dart';
 import 'package:admin/screens/login.dart';
+import 'package:admin/screens/phoneauth.dart';
 import 'package:admin/screens/signup.dart';
 import 'package:admin/screens/splashscreen.dart';
 import 'package:firebase_core/firebase_core.dart';
