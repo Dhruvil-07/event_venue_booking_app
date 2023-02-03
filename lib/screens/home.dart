@@ -1,3 +1,4 @@
+import 'package:admin/authentication/signinauth.dart';
 import 'package:admin/screens/login.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,26 +23,37 @@ class _homeState extends State<home> {
         ),
       ),
 
-      body: Column(
+      body: Container(
+        alignment: Alignment.center,
+                child: Column(
 
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
 
-        children:
-        [
+          children:
+          [
 
-          button(onpress: () async
-          {
-            final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-            await sharedPreferences.remove('loginuser')
-            .whenComplete((){
-              Navigator.push(context , MaterialPageRoute(builder: (context)=>loginsscreen()));
-            });
-          },
-          btncolor: Colors.black , txtcolor: Colors.cyan , height: 50.0 , widtht: 200.0 , btnval: 'logout'),
+            button(onpress: () async
+            {
+              final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+              await sharedPreferences.remove('loginuser')
+              .whenComplete((){
+                Navigator.push(context , MaterialPageRoute(builder: (context)=>loginsscreen()));
+              });
+            },
+            btncolor: Colors.black , txtcolor: Colors.cyan , height: 50.0 , widtht: 200.0 , btnval: 'logout'),
 
-        ],
 
+
+            button(onpress: () async
+            {
+              logout()
+                  .whenComplete((){ Navigator.push(context, MaterialPageRoute(builder: (context)=>loginsscreen())); });
+            },
+                btncolor: Colors.black , txtcolor: Colors.cyan , height: 50.0 , widtht: 200.0 , btnval: 'delete account'),
+          ],
+
+        ),
       ),
     );
   }

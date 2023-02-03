@@ -155,8 +155,6 @@ class _loginsscreenState extends State<loginsscreen>  {
         children: [
 
           // SIGN UP DETAL PART //
-
-
           Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
@@ -185,13 +183,11 @@ class _loginsscreenState extends State<loginsscreen>  {
                ]
             ),
           ),
-
           // SIGN UP PART CLOSE //
 
 
 
          // LOGIN DETAIL PART //
-
           ClipPath(
             clipper: OvalBottomBorderClipper(),
             child: SingleChildScrollView(
@@ -314,7 +310,7 @@ class _loginsscreenState extends State<loginsscreen>  {
 
                         Padding(
                           padding: const EdgeInsets.only(top: 10.0 , left: 260.0),
-                          child: button3(btnval: 'Forget Password ?' , txtcolor: Colors.black , onpress: (){ logout();}),
+                          child: button3(btnval: 'Forget Password ?' , txtcolor: Colors.black , onpress: (){ Navigator.push(context, MaterialPageRoute(builder: (context)=>P)) }),
                         ),
 
 
