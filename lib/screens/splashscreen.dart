@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:admin/screens/drawer.dart';
 import 'package:admin/screens/home.dart';
 import 'package:admin/screens/login.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class splashscreen extends StatefulWidget {
@@ -37,8 +39,8 @@ class _splashscreenState extends State<splashscreen> {
   {
     getchecklogin()
     .whenComplete((){
-      Timer(Duration(seconds: 5), ()=> Navigator.push(context, MaterialPageRoute(builder: (context)=> check == null ? loginsscreen() : home()))
-      );
+      Timer(Duration(seconds: 5), ()=> Navigator.pushReplacement(context, PageTransition(child: check == null ? loginsscreen() : drawer(), type: PageTransitionType.leftToRight , duration: Duration(seconds: 2),
+      )));
     });
     super.initState();
   }

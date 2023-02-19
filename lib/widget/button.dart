@@ -55,8 +55,12 @@ class button2 extends StatefulWidget {
   Color txtcolor;
   double height;
   double widtht;
+  IconData? icon;
+  String btnval;
+  Color iconcolor;
 
-  button2({Key? key , required this.onpress , required this.txtcolor , required this.btncolor , required this.height , required this.widtht}) : super(key: key);
+
+  button2({Key? key , required this.onpress , required this.txtcolor , required this.btncolor , required this.height , required this.widtht , required this.icon , required this.btnval , required this.iconcolor}) : super(key: key);
 
   @override
   State<button2> createState() => _button2State();
@@ -70,8 +74,8 @@ class _button2State extends State<button2> {
       height: widget.height,
       child: ElevatedButton.icon(
         onPressed: widget.onpress,
-        icon: Icon(Icons.add),
-        label: Text("SIGN-UP",
+        icon: Icon(widget.icon , color: widget.iconcolor,),
+        label: Text(widget.btnval,
           style: TextStyle(
             color: widget.txtcolor,
           ),

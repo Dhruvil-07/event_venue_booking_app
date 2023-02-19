@@ -2,6 +2,7 @@ import 'package:admin/screens/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -23,10 +24,11 @@ googlelogin(BuildContext context) async
 
         final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
         await sharedPreferences.setString('signupuser', userdata.idToken.toString());
+
       } )
           .whenComplete((){
 
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>signup()));
+        Navigator.pushReplacement(context, PageTransition(child: signup(), type: PageTransitionType.bottomToTop , duration: Duration(seconds: 2)) );
 
       });
     }

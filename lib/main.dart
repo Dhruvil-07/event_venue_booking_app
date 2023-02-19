@@ -1,5 +1,8 @@
+import 'package:admin/screens/drawer.dart';
 import 'package:admin/screens/forgetpwd.dart';
+import 'package:admin/screens/home.dart';
 import 'package:admin/screens/login.dart';
+import 'package:admin/screens/phoneauth.dart';
 import 'package:admin/screens/signup.dart';
 import 'package:admin/screens/splashscreen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -24,6 +27,16 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       home : splashscreen(),
+      routes:
+      {
+        '/splashscreeen' : (context) => splashscreen(),
+        '/login' : (context) => loginsscreen(),
+        '/signup' : (context) => signup(),
+        '/forgetpassword' : (context) => forgetpwd(),
+        '/phoneauth' : (context) => phoneauth(),
+        '/home' : (context) => home(),
+        '/drawer' : (context) => drawer(),
+      },
     );
   }
 }

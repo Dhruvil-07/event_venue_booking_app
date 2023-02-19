@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/loginmodel.dart';
@@ -34,13 +35,15 @@ class _signupState extends State<signup> {
   // FIREBASE AUTH INSTANCE //
   User? user = FirebaseAuth.instance.currentUser;
 
-  //USER REG METHOD FOR VREATE DOC FOR USER //
+  //USER REG METHOD FOR CREATE DOC FOR USER //
   Future<void> userreg() async
   {
     loginmodel signupfirst = loginmodel();
+    signupfirst.uid = user!.uid.toString();
     signupfirst.email = email.toString();
     signupfirst.password = password.toString();
     signupfirst.phoneno = uphoneno.toString();
+    signupfirst.name = user!.displayName.toString();
 
     FirebaseFirestore.instance.collection('user')
         .doc(user!.uid)
@@ -52,7 +55,7 @@ class _signupState extends State<signup> {
     .catchError((e) => print(e))
     .whenComplete((){
 
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>loginsscreen()));
+          Navigator.pushReplacement(context, PageTransition(child: loginsscreen(), type: PageTransitionType.topToBottom , duration: Duration(seconds: 2)) );
     });
   }
   // userreg method close //
@@ -86,7 +89,7 @@ class _signupState extends State<signup> {
 
                  Padding(
                    padding: const EdgeInsets.only( top: 20.0 , left: 15.0),
-                   child: button(onpress: (){ logout(); }, txtcolor:  Colors.cyan.shade100, btncolor: Colors.black ,  height: 50.0 , widtht: 200.0, btnval: 'Login'),
+                   child: button(onpress: (){}, txtcolor:  Colors.cyan.shade100, btncolor: Colors.black ,  height: 50.0 , widtht: 200.0, btnval: 'Login'),
                  ),
 
               ],

@@ -38,7 +38,12 @@ dependencies:
   firebase_auth: ^4.2.3
   google_sign_in: ^5.4.2
   shared_preferences: ^2.0.15
-
+  pinput: ^2.2.12
+  fl_country_code_picker: ^0.0.4
+  page_transition: ^2.0.9
+  flutter_zoom_drawer: ^2.1.1
+  image_picker: ^0.8.5+3
+  firebase_storage: ^11.0.6
 
 
 
@@ -85,10 +90,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+    - family: dancingfont
+      fonts:
+        - asset: assets/font/DancingScript-Bold.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

@@ -1,7 +1,9 @@
 import 'dart:async';
-
 import 'package:admin/authentication/signinauth.dart';
+import 'package:admin/screens/drawer.dart';
+import 'package:admin/screens/forgetpwd.dart';
 import 'package:admin/screens/home.dart';
+import 'package:admin/screens/phoneauth.dart';
 import 'package:admin/screens/signup.dart';
 import 'package:admin/widget/button.dart';
 import 'package:admin/widget/snackbar.dart';
@@ -11,8 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../model/loginmodel.dart';
 
 class loginsscreen extends StatefulWidget {
@@ -94,7 +96,7 @@ class _loginsscreenState extends State<loginsscreen>  {
     else if(signupuser != null && reguser == null)
     {
       showsnakbar(context, "Register first ", Colors.cyan, Colors.black);
-      Timer(Duration(seconds: 3), ()=> Navigator.push(context, MaterialPageRoute(builder: (context)=>signup())));
+      Timer(Duration(seconds: 3), ()=> Navigator.pushReplacement(context, PageTransition(child: signup(), type: PageTransitionType.bottomToTop , duration: Duration(seconds: 2) , reverseDuration: Duration(seconds: 2))));
 
     }
     else if( signupuser != null && reguser != null)
@@ -117,7 +119,8 @@ class _loginsscreenState extends State<loginsscreen>  {
           final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
           sharedPreferences.setString('loginuser', email!)
               .whenComplete((){
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>home()));
+           // Navigator.pushReplacement(context, PageTransition(child: drawer(), type: PageTransitionType.rightToLeft , alignment: Alignment.center , duration: Duration(seconds: 3)));
+            Navigator.pushReplacementNamed(context, '/drawer');
           });
         }
         else if(signupuser == null)
@@ -136,6 +139,23 @@ class _loginsscreenState extends State<loginsscreen>  {
   }
 
 
+
+  // Forget Password Navgation //
+  fpwdnav() async
+  {
+    if(signupuser == null)
+    {
+      showsnakbar(context, "Sign up First", Colors.cyan, Colors.black);
+    }
+    else if(signupuser != null && reguser == null)
+    {
+      showsnakbar(context, "Registration step Incomplete", Colors.cyan, Colors.black);
+    }
+    else
+    {
+     Navigator.push(context, PageTransition(child: phoneauth(), type: PageTransitionType.rightToLeft , duration: Duration(seconds: 1) , reverseDuration: Duration(seconds: 1)) );
+    }
+  }
 
 
   // Init method for value when page is load //
@@ -177,7 +197,7 @@ class _loginsscreenState extends State<loginsscreen>  {
                   padding: const EdgeInsets.only( bottom: 60.0),
                   child: button2(onpress: (){
                         signupmethod();
-                    } , txtcolor: Colors.black , btncolor: Colors.cyan ,height: 50.0 , widtht: 200.0,  ),
+                    } , txtcolor: Colors.black , btncolor: Colors.cyan ,height: 50.0 , widtht: 200.0, icon: Icons.add, btnval: "Sign-UP", iconcolor: Colors.white),
                 ),
 
                ]
@@ -310,7 +330,10 @@ class _loginsscreenState extends State<loginsscreen>  {
 
                         Padding(
                           padding: const EdgeInsets.only(top: 10.0 , left: 260.0),
-                          child: button3(btnval: 'Forget Password ?' , txtcolor: Colors.black , onpress: (){ Navigator.push(context, MaterialPageRoute(builder: (context)=>P)) }),
+                          child: button3(btnval: 'Forget Password ?' , txtcolor: Colors.black ,
+                              onpress: (){
+                                fpwdnav();
+                             }),
                         ),
 
 
@@ -319,7 +342,7 @@ class _loginsscreenState extends State<loginsscreen>  {
                         padding: const EdgeInsets.only( top: 35.0 , left: 120.0 , right: 30.0 ),
                         child: button(onpress: ()
                         {
-                           logincheck();
+                          logincheck();
                         }
                         , btncolor: Colors.black , txtcolor: Colors.cyan , height: 50.0 , widtht: 200.0 , btnval: 'Login'),
                       ),

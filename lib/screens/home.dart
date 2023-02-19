@@ -1,6 +1,9 @@
 import 'package:admin/authentication/signinauth.dart';
 import 'package:admin/screens/login.dart';
+import 'package:admin/screens/temp.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../widget/button.dart';
@@ -13,48 +16,98 @@ class home extends StatefulWidget {
 }
 
 class _homeState extends State<home> {
+
+  Stream<QuerySnapshot> venues = FirebaseFirestore.instance.collection('venue').snapshots();
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
 
       appBar: AppBar(
         title: Text(
           "Home Screen",
         ),
+        leading: IconButton(
+            onPressed: (){
+              ZoomDrawer.of(context)?.toggle();
+            },
+            icon: Icon(Icons.menu),
+        ),
       ),
 
-      body: Container(
-        alignment: Alignment.center,
-                child: Column(
+      body: StreamBuilder<QuerySnapshot>
+        (
+        stream: venues,
+        builder: (BuildContext context , AsyncSnapshot<QuerySnapshot> snapshot)
+        {
 
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          List venuedtl = [];
+          List filterlist = [];
 
-          children:
-          [
+          snapshot.data!.docs.map((DocumentSnapshot document)
+          {
+            Map a = document.data() as Map<String,dynamic>;
+            venuedtl.add(a);
 
-            button(onpress: () async
+            venuedtl.forEach((element)
             {
-              final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-              await sharedPreferences.remove('loginuser')
-              .whenComplete((){
-                Navigator.push(context , MaterialPageRoute(builder: (context)=>loginsscreen()));
-              });
-            },
-            btncolor: Colors.black , txtcolor: Colors.cyan , height: 50.0 , widtht: 200.0 , btnval: 'logout'),
+              if( element['City'] == "Church Gate")
+              {
+                  filterlist.add(element);
+              }
+            });
 
+            print(filterlist);
+          } ).toList();
 
-
-            button(onpress: () async
-            {
-              logout()
-                  .whenComplete((){ Navigator.push(context, MaterialPageRoute(builder: (context)=>loginsscreen())); });
-            },
-                btncolor: Colors.black , txtcolor: Colors.cyan , height: 50.0 , widtht: 200.0 , btnval: 'delete account'),
-          ],
-
-        ),
+          return Container(
+            child: ListView.builder(
+                itemCount: filterlist.length,
+                itemBuilder: (context , index)
+                {
+                  return ListTile(
+                    title: Text("${filterlist[index]['City']}"),
+                    subtitle: Text("${filterlist[index]['Types']}"),
+                  );
+                }
+            ),
+          );
+        },
       ),
     );
   }
 }
+
+
+
+
+
+
+
+/*
+StreamBuilder<QuerySnapshot>(
+stream: venues,
+builder: (BuildContext context , AsyncSnapshot<QuerySnapshot> snapshot)
+{
+List venuedtl = [];
+
+snapshot.data!.docs.map((DocumentSnapshot documentSnapshot){
+Map a = documentSnapshot.data() as Map<String,dynamic>;
+venuedtl.add(a);
+print(venuedtl);
+}).toList();
+
+print(venuedtl.length);
+
+return ListView.builder(
+itemCount: venuedtl.length,
+itemBuilder: (context , index)
+{
+return ListTile(
+title: Text("${venuedtl[index]['City']}"),
+);
+}
+);
+},
+)*/
