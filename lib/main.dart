@@ -1,4 +1,5 @@
 import 'package:admin/screens/forgetpwd.dart';
+import 'package:admin/screens/home.dart';
 import 'package:admin/screens/login.dart';
 import 'package:admin/screens/phoneauth.dart';
 import 'package:admin/screens/signup.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      home : splashscreen(),
+      home : home(),
     );
   }
 }
