@@ -141,6 +141,7 @@ class _loginsscreenState extends State<loginsscreen>  {
 
 
   // Forget Password Navgation //
+
   fpwdnav() async
   {
     if(signupuser == null)
@@ -153,7 +154,11 @@ class _loginsscreenState extends State<loginsscreen>  {
     }
     else
     {
+
      Navigator.push(context, PageTransition(child: phoneauth(), type: PageTransitionType.rightToLeft , duration: Duration(seconds: 1) , reverseDuration: Duration(seconds: 1)) );
+
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>phoneauth()));
+
     }
   }
 

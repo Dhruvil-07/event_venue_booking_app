@@ -73,7 +73,11 @@ updatepassword() async
        .doc(user!.uid)
        .update({'password' : newpassword.text.toString()})
        .then((value){ showsnakbar(context, "Password Updated Successfully !!! ", Colors.cyan, Colors.black);})
-       .whenComplete((){ Navigator.pushReplacementNamed(context, "/login");});
+
+       .whenComplete((){ Navigator.pushReplacementNamed(context, "/login");})
+
+       .whenComplete((){ Navigator.push(context, MaterialPageRoute(builder: (context)=>loginsscreen()));});
+
 }
 //Update Password Method Over//
   @override
@@ -96,7 +100,8 @@ updatepassword() async
                     height: 100.0,
                     width: 300.0,
                     child: Center(
-                        child: Text("Change Password",
+
+                        child: Text("Forget Password",
                           style: TextStyle(
                             fontSize: 25.0,
                           ),
@@ -227,7 +232,7 @@ updatepassword() async
                     ),
                   ),
                 ),
-              )
+              ),
 
             ],
           ),

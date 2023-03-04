@@ -121,6 +121,8 @@ otpverificationmethod() async
     .then((value)
     {
          Navigator.pushReplacement(context, PageTransition(child: forgetpwd(), type: PageTransitionType.rightToLeft , duration: (Duration(seconds: 2)) , reverseDuration: Duration(seconds: 1)));
+
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>forgetpwd()));
     })
         .whenComplete(() async
     {

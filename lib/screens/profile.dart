@@ -56,20 +56,20 @@ class _profilepageState extends State<profilepage> {
 
       body: Container(
         height: MediaQuery.of(context).size.height,
+        color: Colors.green.withOpacity(0.3),
         child: Column(
           children: [
 
             //UPSIDE DESIGN//
             Container(
-              height: 500.0,
+              height: 450.0,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors : [Colors.blue , Colors.white],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
+                  colors : [Colors.white , Colors.green.shade500],
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
                 ),
-                borderRadius: BorderRadius.only(bottomRight: Radius.circular(80.0) , bottomLeft: Radius.circular(80.0)),
-                border: Border.all(color: Colors.black , width: 5.0),
+                borderRadius: BorderRadius.only(bottomRight: Radius.circular(50.0) , bottomLeft: Radius.circular(50.0)),
               ),
 
               child: Column(
@@ -160,84 +160,135 @@ class _profilepageState extends State<profilepage> {
 
 
 
-            // DOWN SIDE DESIGN//
-            Container(
-             height: 300.0,
-             width: 380.0,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
 
-              child: Card(
-                child: Container(
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Colors.blue , Colors.white],
-                      ),
-                    border: Border.all(width: 3.0 , color: Colors.black),
-                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                  ),
-                  child: Column(
-                    children: [
+                Icon(Icons.email ,  size: 30.0, color: Colors.black),
 
+                SizedBox(width: 20.0,),
 
-                      ListTile(
-                        leading: Icon(Icons.email , size: 30.0, color: Colors.black),
-                        title: Text("${loginuser.email}" ,
-                          style: TextStyle(
-                            fontSize: 20.0,
-                          ),
-                        ),
-                      ),
-
-                     Divider(height: 7.0, color: Colors.black,),
-
-
-                      ListTile(
-                        leading: Icon(Icons.phone, size: 30.0, color : Colors.black,),
-                        title: Text("${loginuser.phoneno}",
-                          style: TextStyle(
-                            fontSize: 20.0,
-                          ),
-                        ),
-                        trailing: IconButton(onPressed: (){}, icon: Icon(Icons.arrow_circle_right , size: 30.0 , color: Colors.black),),
-                      ),
-
-                      Divider(height: 7.0, color: Colors.black,),
-
-
-
-                      ListTile(
-                       leading: Icon(Icons.key , size: 30.0, color: Colors.black,),
-                       title: Text("Password" ,
-                       style: TextStyle(
-                         fontSize: 20.0,
-                       ),
-                       ),
-                       trailing: IconButton(onPressed: ()
-                       {
-                         Navigator.pushReplacement(context, PageTransition(child: phoneauth(), type: PageTransitionType.leftToRight , duration: Duration(seconds: 2)));
-                       }, icon: Icon(Icons.arrow_circle_right , size: 30.0 , color: Colors.black,),),
-                     ),
-
-                      Divider(height: 7.0, color: Colors.black,),
-
-
-
-
-                      ListTile(
-                        leading: Icon(Icons.calendar_month , size: 30.0, color: Colors.black),
-                        title: Text("Booking" ,
-                          style: TextStyle(
-                            fontSize: 20.0,
-                          ),
-                        ),
-                        trailing: IconButton(onPressed: (){}, icon: Icon(Icons.arrow_circle_right , size: 30.0 , color: Colors.black),),
-                      ),
-
-                    ],
+                Text("${loginuser.email}" ,
+                  style: TextStyle(
+                    fontSize: 20.0,
                   ),
                 ),
-              ),
-            )
-            //DOWN SIDE DESIGN OVER//
+
+              ],
+            ),
+
+           Padding(
+               padding: EdgeInsets.only(top: 10.0),
+               child: Divider(height: 5.0, color: Colors.black, thickness: 1.0,)
+           ),
+
+
+            SizedBox(height: 20.0,),
+
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+
+                Padding(
+                  padding: const EdgeInsets.only(left :25.0),
+                  child: Icon(Icons.phone,  size: 30.0, color: Colors.black),
+                ),
+
+                SizedBox(width: 20.0,),
+
+                Text("${loginuser.phoneno}" ,
+                  style: TextStyle(
+                    fontSize: 20.0,
+                  ),
+                ),
+
+                SizedBox(width: 140.0,),
+
+                IconButton(onPressed: (){}, icon: Icon(Icons.arrow_circle_right , size: 30.0 , color: Colors.black)),
+
+              ],
+            ),
+
+            Padding(
+                padding: EdgeInsets.only(top: 10.0),
+                child: Divider(height: 5.0, color: Colors.black, thickness: 1.0,)
+            ),
+
+
+            SizedBox(height: 20.0,),
+
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+
+                Padding(
+                  padding: const EdgeInsets.only(left :25.0),
+                  child: Icon(Icons.key,  size: 30.0, color: Colors.black),
+                ),
+
+                SizedBox(width: 20.0,),
+
+                Text("PASSWORD" ,
+                  style: TextStyle(
+                    fontSize: 20.0,
+                  ),
+                ),
+
+                SizedBox(width: 150.0,),
+
+                IconButton(onPressed: (){
+                  Navigator.pushReplacement(context, PageTransition(child: phoneauth(), type: PageTransitionType.leftToRight , duration: Duration(seconds: 2)));
+                }, icon: Icon(Icons.arrow_circle_right , size: 30.0 , color: Colors.black)),
+
+              ],
+            ),
+
+            Padding(
+                padding: EdgeInsets.only(top: 10.0),
+                child: Divider(height: 5.0, color: Colors.black, thickness: 1.0,)
+            ),
+
+
+
+            SizedBox(height: 20.0,),
+
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+
+                Padding(
+                  padding: const EdgeInsets.only(left :25.0),
+                  child: Icon(Icons.calendar_month,  size: 30.0, color: Colors.black),
+                ),
+
+                SizedBox(width: 20.0,),
+
+                Text("BOOKING" ,
+                  style: TextStyle(
+                    fontSize: 20.0,
+                  ),
+                ),
+
+                SizedBox(width: 170.0,),
+
+                IconButton(onPressed: (){
+                 // Navigator.pushReplacement(context, PageTransition(child: phoneauth(), type: PageTransitionType.leftToRight , duration: Duration(seconds: 2)));
+                }, icon: Icon(Icons.arrow_circle_right , size: 30.0 , color: Colors.black)),
+
+              ],
+            ),
+
+            Padding(
+                padding: EdgeInsets.only(top: 10.0),
+                child: Divider(height: 5.0, color: Colors.black, thickness: 1.0,)
+            ),
+
+
+
+
           ],
         ),
       ),
@@ -247,57 +298,3 @@ class _profilepageState extends State<profilepage> {
 
   }
 }
-
-/*
-
-body: Stack(
-children: [
-
-//UPSIDE CONNTAINER DESIGN//
-Container(
-decoration: BoxDecoration(
-borderRadius: BorderRadius.only( bottomLeft: Radius.circular(80.0) , bottomRight: Radius.circular(80.0)),
-color: Colors.red,
-),
-height: 400.0,
-),
-//UPSIDE COTAINER DESIGN OVER//
-
-
-//USER NAME POSITION//
-Positioned(
-top: 100.0,
-left: 120.0,
-child: Text("USER NAME",
-style: TextStyle(
-fontSize: 30.0,
-fontFamily: 'dancingfont',
-),
-),
-),
-//USER NAME POSITION OVER//
-
-
-//MENU ICON BUTTON//
-Positioned(
-top: 40.0,
-left: 10.0,
-child: IconButton(onPressed: (){ ZoomDrawer.of(context)?.toggle(); }, icon: Icon(Icons.menu)),
-),
-//MENU ICON BUTTON OVER//
-
-
-Positioned(
-top: 180.0,
-left: 115.0,
-child: CircleAvatar(
-backgroundColor: Colors.black,
-radius: 100.0,
-),
-),
-
-
-],
-),
-
-);*/
