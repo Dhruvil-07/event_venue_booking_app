@@ -1,5 +1,8 @@
+import 'package:admin/screens/bookinsecond.dart';
+import 'package:admin/screens/venuedisplay.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class venuedata extends StatefulWidget {
 
@@ -55,7 +58,6 @@ class _venuedataState extends State<venuedata> {
 
 
              List finalvenue = filtervenueata.toSet().toList();
-             print(finalvenue);
 
 
              return Container(
@@ -63,14 +65,43 @@ class _venuedataState extends State<venuedata> {
                    itemCount: finalvenue.length,
                    itemBuilder: (context , index)
                    {
-                     return ListTile(
-                       leading: Text("${finalvenue[index]["Name"]}"),
-                       title: Text("${finalvenue[index]['City']}"),
-                       subtitle: Text("${finalvenue[index]['State']}"),
+                     return  ListTile(
+                         leading: Text("${finalvenue[index]["Name"]}"),
+                         title: Text("${finalvenue[index]['City']}"),
+                         subtitle: Text("${finalvenue[index]['State']}"),
+                         onTap: (){ Get.to(venuedisplay(venuedata: finalvenue[index],)); }
                      );
+
+
+
+                     /*Stack(
+                           children: [
+
+                             Image.network(
+                                 filtervenueata[index]["images"][],
+                                 width: double.infinity,
+                                 height: 100,
+                                 fit: BoxFit.cover),
+                             Positioned(
+                               bottom: 10,
+
+                               child: Container(
+                                 width: 300,
+                                 color: Colors.black54,
+                                 padding: const EdgeInsets.all(10),
+                                 child: const Text(
+                                   'I Like Potatoes And Oranges',
+                                   style: TextStyle(fontSize: 20, color: Colors.white),
+                                 ),
+                               ),
+                             ),
+
+                             SizedBox(height: 20.0,),
+                           ],
+                         );*/
                    }
                ),
-             );;
+             );
            },
         ),
       ),

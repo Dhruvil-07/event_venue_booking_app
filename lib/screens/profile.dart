@@ -56,7 +56,7 @@ class _profilepageState extends State<profilepage> {
 
       body: Container(
         height: MediaQuery.of(context).size.height,
-        color: Colors.green.withOpacity(0.3),
+        color: Colors.red.withOpacity(0.1),
         child: Column(
           children: [
 
@@ -65,7 +65,7 @@ class _profilepageState extends State<profilepage> {
               height: 450.0,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors : [Colors.white , Colors.green.shade500],
+                  colors : [Colors.white , Colors.red.withOpacity(0.4)],
                   begin: Alignment.topRight,
                   end: Alignment.bottomLeft,
                 ),

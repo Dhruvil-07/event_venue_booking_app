@@ -46,7 +46,7 @@ class _homeState extends State<home> {
 
         child: Container(
           height: MediaQuery.of(context).size.height,
-          color: Colors.orange.withOpacity(0.2),
+          color: Colors.blue.withOpacity(0.1),
            child: Stack(
 
             children: [
@@ -55,7 +55,7 @@ class _homeState extends State<home> {
               Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [ Colors.white , Colors.orange ],
+                    colors: [ Colors.white , Colors.blue.withOpacity(1) ],
                     begin: Alignment.topRight,
                     end: Alignment.bottomCenter,
                   ),
@@ -140,18 +140,19 @@ class _homeState extends State<home> {
               Padding(
                 padding: const EdgeInsets.only( top: 420.0 , left: 10.0),
                 child: Container(
-                  height: 25.0,
+                  height: 35.0,
                   child: Text(
-                    "Categaies",
+                    "Categories",
                     style: TextStyle(
-                      fontSize: 20.0,
+                      fontSize: 25.0,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
               ),
 
 
-              SizedBox( height: 50.0,),
+              SizedBox( height: 100.0,),
               
               // CATEGORIS DESIGN //
               Padding(
@@ -184,7 +185,13 @@ class _homeState extends State<home> {
                                        onPressed: (){
                                            Get.to(state(type: categaries[index]));
                                              } ,
-                                     child: Text(categaries[index]),
+                                     child: Text(categaries[index] ,
+                                       style: TextStyle(
+                                         fontSize: 20.0,
+                                         fontWeight: FontWeight.w500,
+                                         fontStyle: FontStyle.italic,
+                                       ),
+                                     ),
                                    ),
                                   ],
                                 ),
