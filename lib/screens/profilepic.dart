@@ -110,8 +110,10 @@ class _profilepicState extends State<profilepic> {
                 ),
                 height: 500.0,
                 width: 400.0,
-              ) : Image.file(img!,
-                fit: BoxFit.cover,
+              ) : ClipRect(
+                child: Image.file(img!,
+                  fit: BoxFit.fill,
+                ),
               ),
 
             ),

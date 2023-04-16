@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:admin/authentication/signinauth.dart';
 import 'package:admin/screens/login.dart';
 import 'package:admin/screens/phoneauth.dart';
@@ -8,6 +10,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -23,6 +27,7 @@ class home extends StatefulWidget {
 class _homeState extends State<home> {
 
   Stream<QuerySnapshot> venues = FirebaseFirestore.instance.collection('venue').snapshots();
+  bool isloading = true;
 
   List categaries = ["Festivity" , "Sport" , "Party" , "Wedding" , "Convention Hall" , "Exhibition"];
   List cpic =
@@ -37,16 +42,37 @@ class _homeState extends State<home> {
 
   User? user = FirebaseAuth.instance.currentUser;
 
+  void initState()
+  {
+    super.initState();
+    Timer(Duration(seconds: 2) ,(){
+    setState(() {
+    isloading = false;
+    });
+    });
+
+  }
+
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
 
-      body: SingleChildScrollView(
+      body: isloading ?
+
+      Center(
+          child: Container(
+              height: 100.0,
+              child: Lottie.network("https://assets9.lottiefiles.com/private_files/lf30_ixykrp0i.json")
+          )
+      )
+
+      :
+      SingleChildScrollView(
 
         child: Container(
           height: MediaQuery.of(context).size.height,
-          color: Colors.blue.withOpacity(0.1),
+          color: Colors.deepPurple.withOpacity(0.3),
            child: Stack(
 
             children: [
@@ -55,14 +81,14 @@ class _homeState extends State<home> {
               Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [ Colors.white , Colors.blue.withOpacity(1) ],
+                    colors: [ Colors.white , Colors.deepPurple.withOpacity(0.4) ],
                     begin: Alignment.topRight,
                     end: Alignment.bottomCenter,
                   ),
                   borderRadius: BorderRadius.only( bottomLeft: Radius.circular(40.0), bottomRight: Radius.circular(40.0),
                   ),
                 ),
-                height: 380.0,
+                height: 350.0,
                 child: Column(
                   children: [
 
@@ -97,10 +123,14 @@ class _homeState extends State<home> {
                         Padding(
                           padding: const EdgeInsets.only(left: 23.0 , top: 10.0),
                           child: Text("Welcome \n       ${user!.displayName}" ,
-                            style: TextStyle(
-                              fontSize: 30,
-                              fontFamily: "dancingfont",
+                            style: GoogleFonts.aclonica(
+                              fontSize: 30.0,
                             ),
+
+                            /* TextStyle(
+                              fontSize: 30,
+                              fontFamily: GoogleFonts.lato,
+                            ),*/
                           ),
                         ),
                       ],
@@ -117,11 +147,16 @@ class _homeState extends State<home> {
 
                         Padding(
                           padding: const EdgeInsets.only(left: 23.0 , top: 20.0),
-                          child: Text("Your Event Is Our \n           First Priority" ,
-                            style: TextStyle(
+                          child: Text("Your Event Is Our \n                 First Priority" ,
+                            style:GoogleFonts.notoSerif(
+                              fontSize: 25.0,
+                            ),
+
+                            /*TextStyle(
                               fontSize: 30,
                               fontFamily: "dancingfont",
-                            ),
+                             // fontFamily: GoogleFonts.damion()
+                            ),*/
                           ),
                         ),
                       ],
@@ -134,11 +169,11 @@ class _homeState extends State<home> {
               //TOP DESIGN END//
 
 
-              SizedBox( height: 20.0,),
+              SizedBox( height: 5.0,),
 
 
               Padding(
-                padding: const EdgeInsets.only( top: 420.0 , left: 10.0),
+                padding: const EdgeInsets.only( top: 380.0 , left: 10.0),
                 child: Container(
                   height: 35.0,
                   child: Text(
@@ -156,47 +191,80 @@ class _homeState extends State<home> {
               
               // CATEGORIS DESIGN //
               Padding(
-                padding: const EdgeInsets.only( top: 470.0 , left: 10.0),
-                child: Container(color: Colors.transparent, height: 300.0,
+                padding: const EdgeInsets.only( top: 440.0 , left: 10.0),
+                child: Container(
+                  color: Colors.transparent,
+                  height: MediaQuery.of(context).size.height,
                   child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
+                    scrollDirection: Axis.vertical,
                       itemCount: categaries.length,
                       itemBuilder:(BuildContext context , int index)
                           {
-                            return Card(
-                              shape: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.black),
-                              ),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  border: Border.all(width: 3.0),
-                                ),
-                                width: 350.0,
-                                child: Column(
-                                  children: [
+                            return Stack(
+                              children: [
 
-                                   Image(image: NetworkImage(cpic[index]) , fit: BoxFit.cover,),
-
-                                   TextButton(
-                                        style: TextButton.styleFrom(
-                                          primary: Colors.black,
+                                InkWell(
+                                  child: Card(
+                                    elevation: 5.0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    child: Container(
+                                      color: Colors.white.withOpacity(0.3),
+                                      height: 300.0,
+                                      width: 400.0,
+                                      padding: EdgeInsets.all(10.0),
+                                      child: Container(
+                                        margin: EdgeInsets.only(top: 5.0 , bottom: 70.0, ),
+                                        width: 400.0,
+                                        height: 300.0,
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(10.0),
+                                          child: Image.network("${cpic[index]}",
+                                            fit: BoxFit.fitWidth,
+                                          ),
                                         ),
-                                       onPressed: (){
-                                           Get.to(state(type: categaries[index]));
-                                             } ,
-                                     child: Text(categaries[index] ,
-                                       style: TextStyle(
-                                         fontSize: 20.0,
-                                         fontWeight: FontWeight.w500,
-                                         fontStyle: FontStyle.italic,
-                                       ),
-                                     ),
-                                   ),
-                                  ],
+                                      ),
+                                    ),
+                                    semanticContainer: true,
+                                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                                    margin: EdgeInsets.all(10.0),
+                                    color: Colors.grey[200],
+                                    shadowColor: Colors.grey[900],
+                                    borderOnForeground: true,
+                                  ),
+                                  onTap:(){ Get.to(state(type: categaries[index]));},
                                 ),
-                              ),
+
+
+                                Positioned(
+                                  bottom: 25,
+
+                                  child: Container(
+                                      width: 300,
+                                      padding: const EdgeInsets.only(left: 100.0, bottom: 10.0),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+
+                                          Center(
+                                            child: Text("${categaries[index]}" ,
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20.0,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                  ),
+                                ),
+
+                              ],
                             );
+
+
 
                           }
                   ),

@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:ffi';
+import 'package:admin/screens/drawer.dart';
+import 'package:admin/screens/profile.dart';
 import 'package:admin/widget/snackbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,14 +19,14 @@ import '../model/loginmodel.dart';
 import '../widget/button.dart';
 import 'forgetpwd.dart';
 
-class phoneauth extends StatefulWidget {
-  const phoneauth({Key? key}) : super(key: key);
+class phoneupdate extends StatefulWidget {
+  const phoneupdate({Key? key}) : super(key: key);
 
   @override
-  State<phoneauth> createState() => _phoneauthState();
+  State<phoneupdate> createState() => _phoneupdateState();
 }
 
-class _phoneauthState extends State<phoneauth> {
+class _phoneupdateState extends State<phoneupdate> {
 
   bool isloading = true;
 
@@ -87,6 +89,16 @@ class _phoneauthState extends State<phoneauth> {
 // Init method over//
 
 
+//update phone number//
+  updatephonenumber() async
+  {
+    FirebaseFirestore.instance.collection('user')
+        .doc(user!.uid)
+        .update({'phoneno' : phonenocontroller.text.toString()})
+        .then((value){ showsnakbar(context, "Phone Number Updated Successfully !!! ", Colors.cyan, Colors.black);})
+        .whenComplete((){ Get.to(drawer());});
+  }
+//update phone number over//
 
 //Phone number verification method//
   phoneverificationmethod() async
@@ -94,10 +106,6 @@ class _phoneauthState extends State<phoneauth> {
     if(contrycode.compareTo("Select Country Code") == 0)
     {
       showsnakbar(context, "Select country code", Colors.cyan, Colors.black);
-    }
-    else if( regphoneno != phonenocontroller.text.toString() )
-    {
-      showsnakbar(context, "Phone Number not Register with Accunt.", Colors.cyan, Colors.black);
     }
     else{
 
@@ -126,29 +134,27 @@ class _phoneauthState extends State<phoneauth> {
 
 
 // OTP verification Method//
-otpverificationmethod() async
-{
-  try
+  otpverificationmethod() async
   {
-    PhoneAuthCredential credential =  PhoneAuthProvider.credential(verificationId: verify, smsCode: otp);
-    await FirebaseAuth.instance.currentUser!.linkWithCredential(credential)
-    .then((value)
+    try
     {
-
-       Get.to(forgetpwd());
-
-    })
-        .whenComplete(() async
+      PhoneAuthCredential credential =  PhoneAuthProvider.credential(verificationId: verify, smsCode: otp);
+      await FirebaseAuth.instance.currentUser!.linkWithCredential(credential)
+          .then((value)
+      {
+         updatephonenumber();
+      })
+          .whenComplete(() async
+      {
+        await FirebaseAuth.instance.currentUser!.unlink(PhoneAuthProvider.PROVIDER_ID);
+      });
+    }
+    on FirebaseAuthException catch(e)
     {
-      await FirebaseAuth.instance.currentUser!.unlink(PhoneAuthProvider.PROVIDER_ID);
-    });
-  }
-   on FirebaseAuthException catch(e)
-  {
-    showsnakbar(context, 'wrong otp', Colors.cyan, Colors.black);
-  }
+      showsnakbar(context, 'wrong otp', Colors.cyan, Colors.black);
+    }
 
-}
+  }
 //OTP verificatio Method Over//
 
 
@@ -158,15 +164,15 @@ otpverificationmethod() async
     return Scaffold(
       body: isloading
 
-      ?
+          ?
 
-        Center(
-        child: Container(
-        height: 100.0,
-        child: Lottie.network("https://assets9.lottiefiles.com/private_files/lf30_ixykrp0i.json")
-    )
-    )
-      :
+      Center(
+          child: Container(
+              height: 100.0,
+              child: Lottie.network("https://assets9.lottiefiles.com/private_files/lf30_ixykrp0i.json")
+          )
+      )
+          :
       Container(
         color: Colors.deepPurple.withOpacity(0.2),
         height: MediaQuery.of(context).size.height,
@@ -180,7 +186,7 @@ otpverificationmethod() async
 
                 SizedBox(height: 70.0,),
 
-                Text("OTP Verification",
+                Text("Phone Number Update",
                   style: GoogleFonts.oswald(
                     fontSize: 30.0,
                     fontWeight: FontWeight.w700,
@@ -194,7 +200,9 @@ otpverificationmethod() async
                   height: 280.0,
                   width: 500.0,
                   child: Center(
-                    child : Lottie.network("https://assets6.lottiefiles.com/packages/lf20_wpf1kujc.json"),
+                    child: Lottie.asset("assets/lottie/update.json"),
+
+                    //Lottie.network("https://assets3.lottiefiles.com/packages/lf20_smww5edn.json"),
                   ),
                 ),
 

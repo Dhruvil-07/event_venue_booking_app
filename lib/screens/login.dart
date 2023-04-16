@@ -7,12 +7,16 @@ import 'package:admin/screens/phoneauth.dart';
 import 'package:admin/screens/signup.dart';
 import 'package:admin/widget/button.dart';
 import 'package:admin/widget/snackbar.dart';
+import 'package:carousel_slider/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:lottie/lottie.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../model/loginmodel.dart';
@@ -27,7 +31,7 @@ class loginsscreen extends StatefulWidget {
 class _loginsscreenState extends State<loginsscreen>  {
 
   bool show = true;
-
+  bool isloading = true;
 
   // form key and controler //
   final formkey = GlobalKey<FormState>();
@@ -89,6 +93,7 @@ class _loginsscreenState extends State<loginsscreen>  {
   // METHOD FOR SIGNUP //
   signupmethod() async
   {
+    /*
     if(signupuser == null && reguser == null)
     {
       googlelogin(context);
@@ -102,7 +107,9 @@ class _loginsscreenState extends State<loginsscreen>  {
     else if( signupuser != null && reguser != null)
     {
       showsnakbar(context, "already register" , Colors.cyan , Colors.black);
-    }
+    }*/
+
+    googlelogin(context);
 
   }
 
@@ -154,11 +161,7 @@ class _loginsscreenState extends State<loginsscreen>  {
     }
     else
     {
-
-     Navigator.push(context, PageTransition(child: phoneauth(), type: PageTransitionType.rightToLeft , duration: Duration(seconds: 1) , reverseDuration: Duration(seconds: 1)) );
-
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>phoneauth()));
-
+       Get.to(phoneauth());
     }
   }
 
@@ -169,6 +172,11 @@ class _loginsscreenState extends State<loginsscreen>  {
     userdtl();
     prefvalue();
     super.initState();
+    Timer(Duration(seconds: 3), () {
+      setState(() {
+        isloading = false;
+      });
+    });
   }
 
 
@@ -176,206 +184,192 @@ class _loginsscreenState extends State<loginsscreen>  {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
+      body: isloading ?
 
-          // SIGN UP DETAL PART //
-          Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            color: Colors.black,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
+      Center(
+          child: Container(
+              height: 100.0,
+              child: Lottie.network("https://assets9.lottiefiles.com/private_files/lf30_ixykrp0i.json")
+          )
+      )
 
-                Padding(
-                  padding: const EdgeInsets.only( bottom: 60.0),
-                  child: Text("-------------------  OR --------------------",
-                  style: TextStyle(
-                    color: Colors.white,
+      :
+
+      Container(
+        color: Colors.deepPurple.withOpacity(0.2),
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        child: SingleChildScrollView(
+          scrollDirection:Axis.vertical,
+            child: Form(
+              key: formkey,
+              child: Column(
+
+                children: [
+
+                  SizedBox(height: 50.0,),
+
+                  Text("Login",
+                    style: GoogleFonts.oswald(
+                      fontSize: 30.0,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 3.0,
+                    ),
                   ),
+
+
+                  SizedBox(height: 20.0,),
+
+                  Container(
+                    height: 280.0,
+                    width: 500.0,
+                    child: Center(
+                      child: Lottie.asset("assets/lottie/login.json"),
+
+                      //Lottie.network("https://assets7.lottiefiles.com/packages/lf20_xlmz9xwm.json"),
+                    ),
                   ),
-                ),
 
+                  SizedBox(height: 10.0,),
 
-                Padding(
-                  padding: const EdgeInsets.only( bottom: 60.0),
-                  child: button2(onpress: (){
-                        signupmethod();
-                    } , txtcolor: Colors.black , btncolor: Colors.cyan ,height: 50.0 , widtht: 200.0, icon: Icons.add, btnval: "Sign-UP", iconcolor: Colors.white),
-                ),
-
-               ]
-            ),
-          ),
-          // SIGN UP PART CLOSE //
-
-
-
-         // LOGIN DETAIL PART //
-          ClipPath(
-            clipper: OvalBottomBorderClipper(),
-            child: SingleChildScrollView(
-              child: Container(
-                height:  600.0,
-                width: MediaQuery.of(context).size.width,
-                color: Colors.cyan.shade100,
-                child: Form(
-                  key: formkey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-
-                     Padding(
-                       padding: const EdgeInsets.only( top: 100.0 , left: 28.0),
-                       child: Text("Welcome to",
-                         style: TextStyle(
-                           fontSize: 15.0,
-                         ),
-                       ),
-                     ),
-
-                      Padding(
-                        padding: const EdgeInsets.only( top: 3.0 , left: 28.0),
-                        child: Text("EVENTOR",
-                          style: TextStyle(
-                            fontSize: 30.0,
-                            fontWeight: FontWeight.bold,
+                  //email //
+                  Padding(
+                    padding: const EdgeInsets.only( top: 40.0 , left: 25.0 , right: 30.0 ),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                            borderSide: BorderSide(width: 2.0 , color: Colors.black),
                           ),
-                        ),
-                      ),
-
-
-                      Padding(
-                        padding: const EdgeInsets.only( top: 3.0 , left: 28.0),
-                        child: Text("Login And Continue",
-                          style: TextStyle(
-                            fontSize: 15.0,
+                          suffixIcon: Icon(Icons.email , size: 30.0, color: Colors.black),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                            borderSide: BorderSide(width: 2.0 , color: Colors.black),
                           ),
-                        ),
-                      ),
-
-
-                      Padding(
-                        padding: const EdgeInsets.only( top: 40.0 , left: 25.0 , right: 30.0 ),
-                        child: TextFormField(
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                                borderSide: BorderSide(width: 2.0 , color: Colors.black),
-                              ),
-                              suffixIcon: Icon(Icons.email , size: 30.0, color: Colors.black),
-                              focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                                  borderSide: BorderSide(width: 2.0 , color: Colors.black),
-                              ),
-                              label: Text("Enter Your Email" ,
-                              style: TextStyle(
-                                color: Colors.black,
-                              ),
-                              )
+                          label: Text("Enter Your Email" ,
+                            style: TextStyle(
+                              color: Colors.black,
                             ),
-                          cursorColor: Colors.black,
-                          controller: emailcontroller,
-                          validator: (value)
-                          {
-                            if(value!.isEmpty)
-                              {
-                                return "Enter Email";
-                              }
-                          },
-
-                        ),
+                          )
                       ),
-
-
-
-
-                      Padding(
-                        padding: const EdgeInsets.only( top: 40.0 , left: 25.0 , right: 30.0 ),
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                 borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                                 borderSide: BorderSide(width: 2.0 , color: Colors.black),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                                borderSide: BorderSide(width: 2.0 , color: Colors.black),
-                              ),
-                              label: Text("Enter Password" ,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                ),
-                              ),
-                            suffixIcon: IconButton(
-                              onPressed: (){
-                                 setState(() {
-                                   show = !show;
-                                 });
-                              },
-                              icon: Icon( show ? Icons.visibility_off : Icons.visibility , color: Colors.black , size: 30.0,),
-                            ),
-                          ),
-                          obscureText: show,
-                          cursorColor: Colors.black,
-                          controller: passwordcontroller,
-                          validator: (value)
-                          {
-                            if(value!.isEmpty)
-                              {
-                                return "Enter password";
-                              }
-                          },
-
-                        ),
-                      ),
-
-
-
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10.0 , left: 260.0),
-                          child: button3(btnval: 'Forget Password ?' , txtcolor: Colors.black ,
-                              onpress: (){
-                                fpwdnav();
-                             }),
-                        ),
-
-
-
-                      Padding(
-                        padding: const EdgeInsets.only( top: 35.0 , left: 120.0 , right: 30.0 ),
-                        child: button(onpress: ()
+                      cursorColor: Colors.black,
+                      controller: emailcontroller,
+                      validator: (value)
+                      {
+                        if(value!.isEmpty)
                         {
-                          logincheck();
+                          return "Enter Email";
                         }
-                        , btncolor: Colors.black , txtcolor: Colors.cyan , height: 50.0 , widtht: 200.0 , btnval: 'Login'),
-                      ),
+                      },
 
-                      
+                    ),
+                  ),
+                  //email over //
+
+
+                  //pasword//
+                  Padding(
+                    padding: const EdgeInsets.only( top: 40.0 , left: 25.0 , right: 30.0 ),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                          borderSide: BorderSide(width: 2.0 , color: Colors.black),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                          borderSide: BorderSide(width: 2.0 , color: Colors.black),
+                        ),
+                        label: Text("Enter Password" ,
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
+                        suffixIcon: IconButton(
+                          onPressed: (){
+                            setState(() {
+                              show = !show;
+                            });
+                          },
+                          icon: Icon( show ? Icons.visibility_off : Icons.visibility , color: Colors.black , size: 30.0,),
+                        ),
+                      ),
+                      obscureText: show,
+                      cursorColor: Colors.black,
+                      controller: passwordcontroller,
+                      validator: (value)
+                      {
+                        if(value!.isEmpty)
+                        {
+                          return "Enter password";
+                        }
+
+                      },
+
+                    ),
+                  ),
+                  //pasword over//
+
+
+
+                  //foeget pasword //
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0 , left: 240.0 , ) ,
+                    child: button3(btnval: 'Forget Password ?' , txtcolor: Colors.black ,
+                        onpress: (){
+                          fpwdnav();
+                        }),
+                  ),
+                  //forget paword over//
+
+
+                  SizedBox(height: 15.0,),
+
+                  //Login Button //
+                     Row(
+                       mainAxisAlignment: MainAxisAlignment.center,
+                       children: [
+                         button(onpress: ()
+                        {
+
+                              logincheck();
+                        }
+                          , btncolor: Colors.black, txtcolor: Colors.white , height: 50.0 , widtht: 200.0 , btnval: 'Login'
+                        ),
+                       ],
+                     ),
+                  //login button over//
+
+
+                  SizedBox(height: 20.0,),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("----------------------------------  OR ------------------------------------",
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
                     ],
                   ),
-                ),
+
+
+                  SizedBox(height: 20.0,),
+
+                  button2(onpress: (){
+                signupmethod();
+              } , txtcolor: Colors.white , btncolor: Colors.black ,height: 50.0 , widtht: 200.0, icon: Icons.add, btnval: "Sign-UP", iconcolor: Colors.white,
+              ),
+
+
+                ],
+
               ),
             ),
-          ),
-
-          // LOGIN PART CLOSE //
-
-
-
-
-        ],
-
-      )
+        ),
+      ),
     );
   }
 }
-
-
-
-
-
-
-
 

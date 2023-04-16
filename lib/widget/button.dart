@@ -117,7 +117,11 @@ class _button3State extends State<button3> {
         primary: widget.txtcolor,
       ),
         onPressed: widget.onpress,
-        child: Text(widget.btnval)
+        child: Text(widget.btnval ,
+        style: TextStyle(
+          fontSize: 15.0
+        ),
+        )
     );
   }
 }

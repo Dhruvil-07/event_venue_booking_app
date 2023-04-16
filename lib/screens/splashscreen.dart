@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:ui';
-
 import 'package:admin/screens/drawer.dart';
 import 'package:admin/screens/home.dart';
 import 'package:admin/screens/login.dart';
@@ -39,8 +38,14 @@ class _splashscreenState extends State<splashscreen> {
   {
     getchecklogin()
     .whenComplete((){
-      Timer(Duration(seconds: 5), ()=> Navigator.pushReplacement(context, PageTransition(child: check == null ? loginsscreen() : drawer(), type: PageTransitionType.leftToRight , duration: Duration(seconds: 2),
-      )));
+      Timer(Duration(seconds: 5), (){
+        check != null ?
+        Navigator.pushReplacementNamed(context, "/drawer")
+            :
+        Navigator.pushReplacementNamed(context, "/login")
+        ;
+      }
+      );
     });
     super.initState();
   }

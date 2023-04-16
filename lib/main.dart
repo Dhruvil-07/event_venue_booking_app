@@ -1,3 +1,4 @@
+import 'package:admin/screens/booking_display.dart';
 import 'package:admin/screens/drawer.dart';
 import 'package:admin/screens/forgetpwd.dart';
 import 'package:admin/screens/home.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
         '/phoneauth' : (context) => phoneauth(),
         '/home' : (context) => home(),
         '/drawer' : (context) => drawer(),
+        '/booking' : (context) => bookingdisplay( ),
       },
     );
   }

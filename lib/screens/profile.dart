@@ -1,11 +1,16 @@
+import 'package:admin/screens/booking.dart';
+import 'package:admin/screens/booking_display.dart';
 import 'package:admin/screens/phoneauth.dart';
 import 'package:admin/screens/profilepic.dart';
+import 'package:admin/screens/updatephoneno.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../authentication/signinauth.dart';
 import '../model/loginmodel.dart';
 
@@ -38,6 +43,16 @@ class _profilepageState extends State<profilepage> {
     });
   }
 
+  //delete method//
+  Future<void> deleteuser()
+  {
+    return FirebaseFirestore.instance.collection('user')
+        .doc(user!.uid)
+        .delete()
+        .then((value) => logout())
+        .whenComplete(() => Navigator.pushReplacementNamed(context,"/login") );
+  }
+
 
   // Init method for value when page is load //
   void initState()
@@ -56,7 +71,7 @@ class _profilepageState extends State<profilepage> {
 
       body: Container(
         height: MediaQuery.of(context).size.height,
-        color: Colors.red.withOpacity(0.1),
+        color: Colors.deepPurple.withOpacity(0.1),
         child: Column(
           children: [
 
@@ -65,7 +80,7 @@ class _profilepageState extends State<profilepage> {
               height: 450.0,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors : [Colors.white , Colors.red.withOpacity(0.4)],
+                  colors : [Colors.white , Colors.deepPurple.withOpacity(0.5)],
                   begin: Alignment.topRight,
                   end: Alignment.bottomLeft,
                 ),
@@ -87,8 +102,27 @@ class _profilepageState extends State<profilepage> {
                           padding: const EdgeInsets.only(right: 20.0),
                           child: IconButton(onPressed: ()
                           {
-                            logout()
-                                .whenComplete((){ Navigator.pushReplacementNamed(context, "/login"); });
+                             showDialog(
+                                 context: context,
+                                 builder: (context) => AlertDialog(
+                                   title: Text("Delete Account"),
+                                   content: Text("Are You Sure , You Want To Delete Acount"),
+                                   actions: [
+
+                                     TextButton(
+                                       onPressed: (){ Navigator.pop(context); },
+                                       child: Text("Back"),
+                                     ),
+
+                                     TextButton(
+                                         onPressed: (){ deleteuser(); },
+                                         child: Text("Delete"),
+                                     ),
+
+
+                                   ],
+                                 )
+                             );
                           }, icon: Icon(Icons.delete) , tooltip: "Delete Account"),
 
                         ),
@@ -101,14 +135,15 @@ class _profilepageState extends State<profilepage> {
 
                   //USER NAME DESIGN//
                   Padding(
-                    padding: const EdgeInsets.only(top: 30.0, left: 120.0,),
+                    padding: const EdgeInsets.only(top: 30.0,),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text("${loginuser.name}",
-                          style: TextStyle(
-                            fontSize: 30.0,
-                            fontFamily: 'dancingfont',
-                          ),
+                          style: GoogleFonts.alegreya(
+                            fontSize: 25.0,
+                            fontWeight: FontWeight.bold,
+                          )
                         ),
                       ],
                     ),
@@ -118,13 +153,18 @@ class _profilepageState extends State<profilepage> {
 
                   //USER PHOTO DESIGN//
                   Padding(
-                    padding: const EdgeInsets.only(top: 30.0, left: 115.0,),
+                    padding: const EdgeInsets.only(top: 30.0,),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                        CircleAvatar(
-                         radius: 100.0,
-                         backgroundImage: NetworkImage("${loginuser.photourl}"),
-                         backgroundColor: Colors.black,
+                         backgroundColor: Colors.white,
+                         radius: 100,
+                         child: CircleAvatar(
+                           radius: 90.0,
+                           backgroundImage: NetworkImage("${loginuser.photourl}"),
+                           backgroundColor: Colors.black,
+                         ),
                        )
                       ],
                     ),
@@ -134,13 +174,13 @@ class _profilepageState extends State<profilepage> {
                   
                   //PIC UPLOAD ICON//
                   Padding(
-                    padding: const EdgeInsets.only( top: 10.0,left: 30.0),
+                    padding: const EdgeInsets.only( top: 10.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         IconButton(
                           onPressed: (){
-                              Navigator.push(context, PageTransition(child: profilepic(), type:  PageTransitionType.topToBottom , duration: Duration(seconds: 2),));
+                              Navigator.push(context, PageTransition(child: profilepic(), type:  PageTransitionType.topToBottom , duration: Duration(seconds: 1),));
                           },
                           icon: Icon(Icons.camera_alt_rounded , size: 30.0,),
                         ),
@@ -161,8 +201,10 @@ class _profilepageState extends State<profilepage> {
 
 
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
+
+                SizedBox(width: 30.0,),
 
                 Icon(Icons.email ,  size: 30.0, color: Colors.black),
 
@@ -187,7 +229,7 @@ class _profilepageState extends State<profilepage> {
 
 
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
 
                 Padding(
@@ -205,7 +247,9 @@ class _profilepageState extends State<profilepage> {
 
                 SizedBox(width: 140.0,),
 
-                IconButton(onPressed: (){}, icon: Icon(Icons.arrow_circle_right , size: 30.0 , color: Colors.black)),
+                IconButton(onPressed: (){
+                  Get.to(phoneupdate());
+                }, icon: Icon(Icons.arrow_circle_right , size: 30.0 , color: Colors.black)),
 
               ],
             ),
@@ -220,7 +264,7 @@ class _profilepageState extends State<profilepage> {
 
 
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
 
                 Padding(
@@ -230,17 +274,17 @@ class _profilepageState extends State<profilepage> {
 
                 SizedBox(width: 20.0,),
 
-                Text("PASSWORD" ,
+                Text("Change Password" ,
                   style: TextStyle(
                     fontSize: 20.0,
                   ),
                 ),
 
-                SizedBox(width: 150.0,),
+                SizedBox(width: 85.0,),
 
                 IconButton(onPressed: (){
-                  Navigator.pushReplacement(context, PageTransition(child: phoneauth(), type: PageTransitionType.leftToRight , duration: Duration(seconds: 2)));
-                }, icon: Icon(Icons.arrow_circle_right , size: 30.0 , color: Colors.black)),
+                  Get.to(phoneauth());
+                  }, icon: Icon(Icons.arrow_circle_right , size: 30.0 , color: Colors.black)),
 
               ],
             ),
@@ -260,23 +304,42 @@ class _profilepageState extends State<profilepage> {
               children: [
 
                 Padding(
-                  padding: const EdgeInsets.only(left :25.0),
-                  child: Icon(Icons.calendar_month,  size: 30.0, color: Colors.black),
+                  padding: const EdgeInsets.only(left :15.0),
+                  child: IconButton(onPressed: (){
+
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                          title: Text("Logout"),
+                          content: Text("Are You Sure ??? "),
+                          actions: [
+
+                            TextButton(
+                              onPressed: (){ Navigator.pop(context); },
+                              child: Text("Back"),
+                            ),
+
+                            TextButton(
+                                onPressed: () async {
+                                  final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+                                  await sharedPreferences.remove('loginuser').whenComplete(() {Navigator.pushReplacementNamed(context, "/login");});
+                                },
+                                child: Text("Logout")
+                            ),
+                          ]
+                      ),
+                    );
+                  }, icon: Icon(Icons.arrow_circle_right , size: 30.0 , color: Colors.black)),
+                  //Icon(Icons.calendar_month,  size: 30.0, color: Colors.black),
                 ),
 
                 SizedBox(width: 20.0,),
 
-                Text("BOOKING" ,
+                Text("Logout" ,
                   style: TextStyle(
                     fontSize: 20.0,
                   ),
                 ),
-
-                SizedBox(width: 170.0,),
-
-                IconButton(onPressed: (){
-                 // Navigator.pushReplacement(context, PageTransition(child: phoneauth(), type: PageTransitionType.leftToRight , duration: Duration(seconds: 2)));
-                }, icon: Icon(Icons.arrow_circle_right , size: 30.0 , color: Colors.black)),
 
               ],
             ),

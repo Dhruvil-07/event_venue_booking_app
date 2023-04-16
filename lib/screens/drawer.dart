@@ -1,3 +1,4 @@
+import 'package:admin/screens/booking_display.dart';
 import 'package:admin/screens/home.dart';
 import 'package:admin/screens/menuscreen.dart';
 import 'package:admin/screens/profile.dart';
@@ -54,7 +55,7 @@ class _drawerState extends State<drawer> {
         case MenuIteams.notification:
           return home();
         case MenuIteams.booking :
-          return home();
+          return bookingdisplay();
       }
  }
 
