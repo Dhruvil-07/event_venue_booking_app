@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'navbar.dart';
+
 class bookingdisplay extends StatefulWidget {
   const bookingdisplay({Key? key}) : super(key: key);
 
@@ -27,21 +29,23 @@ class _bookingdisplayState extends State<bookingdisplay> {
       length: 2,
       child: Scaffold(
 
-       /* appBar: AppBar(
-          backgroundColor: Colors.deepPurple,
-          elevation: 0.1,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              IconButton(onPressed: (){ ZoomDrawer.of(context)?.toggle();  }, icon: Icon(Icons.menu , size: 30.0,)),
 
-              SizedBox(width: 30.0,),
-
-              Text("Booking Display Window" ,
+        drawer: navbar(),
+        appBar:AppBar (
+          elevation: 0.0,
+          backgroundColor: Colors.deepPurple.withOpacity(0.5),
+          title: Padding(
+            padding: const EdgeInsets.only(left: 10.0),
+            child: Text("Booking Display Window",
+              style: GoogleFonts.oswald(
+                fontSize: 25.0,
+                fontWeight: FontWeight.w700,
+                letterSpacing: 0.0,
+                color: Colors.black
               ),
-            ],
+            ),
           ),
-        ),*/
+        ),
 
         body: Container(
           color: Colors.deepPurple.withOpacity(0.3),
@@ -51,7 +55,7 @@ class _bookingdisplayState extends State<bookingdisplay> {
                     SizedBox(height: 50.0,),
 
                     //tile detail //
-                    Row(
+                    /*Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         IconButton(onPressed: (){ ZoomDrawer.of(context)?.toggle();  }, icon: Icon(Icons.menu , size: 30.0,)),
@@ -66,14 +70,14 @@ class _bookingdisplayState extends State<bookingdisplay> {
                           ),
                         ),
                       ],
-                    ),
+                    ),*/
                     //over//
 
-                    SizedBox(height: 30.0,),
+                    SizedBox(height: 0.0,),
 
                     // custom tab bar start //
                    Padding(
-                     padding: const EdgeInsets.all(8.0),
+                     padding: const EdgeInsets.only(top: 0.0 , left: 8.0 , right: 8.0),
                      child: Container(
                           decoration: BoxDecoration(
                             color: Colors.deepPurple.withOpacity(0.2),
@@ -115,10 +119,8 @@ class _bookingdisplayState extends State<bookingdisplay> {
                     Expanded(
                         child: TabBarView(
                       children: [
-
                         pendingbooking(),
                         confirmbooking(),
-
                       ],
                     ))
 

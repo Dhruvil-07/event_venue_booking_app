@@ -127,7 +127,7 @@ class _loginsscreenState extends State<loginsscreen>  {
           sharedPreferences.setString('loginuser', email!)
               .whenComplete((){
            // Navigator.pushReplacement(context, PageTransition(child: drawer(), type: PageTransitionType.rightToLeft , alignment: Alignment.center , duration: Duration(seconds: 3)));
-            Navigator.pushReplacementNamed(context, '/drawer');
+            Navigator.pushReplacementNamed(context, '/home');
           });
         }
         else if(signupuser == null)

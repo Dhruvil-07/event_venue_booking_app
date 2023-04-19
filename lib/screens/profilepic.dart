@@ -65,7 +65,8 @@ class _profilepicState extends State<profilepic> {
         .update({ "photourl" : photourl })
         .then((value) => showsnakbar(context, "Your Pic Upload Successfully!!!", Colors.blue, Colors.black))
         .whenComplete(() =>
-       Navigator.push(context, PageTransition(child: drawer(), type: PageTransitionType.bottomToTop , duration: Duration(seconds: 2))),
+       Navigator.push(context, PageTransition(child: profilepage
+         (), type: PageTransitionType.bottomToTop , duration: Duration(seconds: 2))),
       //Navigator.pop(context),
     );
   }

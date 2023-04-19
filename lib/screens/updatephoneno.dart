@@ -96,7 +96,7 @@ class _phoneupdateState extends State<phoneupdate> {
         .doc(user!.uid)
         .update({'phoneno' : phonenocontroller.text.toString()})
         .then((value){ showsnakbar(context, "Phone Number Updated Successfully !!! ", Colors.cyan, Colors.black);})
-        .whenComplete((){ Get.to(drawer());});
+        .whenComplete((){ Get.to(profilepage());});
   }
 //update phone number over//
 

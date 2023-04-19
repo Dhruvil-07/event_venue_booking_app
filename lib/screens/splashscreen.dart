@@ -40,7 +40,7 @@ class _splashscreenState extends State<splashscreen> {
     .whenComplete((){
       Timer(Duration(seconds: 5), (){
         check != null ?
-        Navigator.pushReplacementNamed(context, "/drawer")
+        Navigator.pushReplacementNamed(context, "/home")
             :
         Navigator.pushReplacementNamed(context, "/login")
         ;

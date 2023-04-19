@@ -1,7 +1,8 @@
 import 'dart:async';
-
 import 'package:admin/authentication/signinauth.dart';
+import 'package:admin/screens/drawer.dart';
 import 'package:admin/screens/login.dart';
+import 'package:admin/screens/navbar.dart';
 import 'package:admin/screens/phoneauth.dart';
 import 'package:admin/screens/state.dart';
 import 'package:admin/screens/temp.dart';
@@ -58,6 +59,21 @@ class _homeState extends State<home> {
 
     return Scaffold(
 
+      drawer: navbar(),
+      appBar:AppBar (
+        elevation: 0.0,
+        backgroundColor: Colors.deepPurple.withOpacity(0.5),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 100.0),
+          child: Text("Home" ,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 20.0,
+          ),
+          ),
+        ),
+      ),
+
       body: isloading ?
 
       Center(
@@ -78,102 +94,104 @@ class _homeState extends State<home> {
             children: [
 
               //TOP DESIGN //
-              Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [ Colors.white , Colors.deepPurple.withOpacity(0.4) ],
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomCenter,
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0 , left: 10.0 , right: 10.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [ Colors.white , Colors.deepPurple.withOpacity(0.4) ],
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomCenter,
+                    ),
+                    borderRadius: BorderRadius.only( bottomLeft: Radius.circular(40.0), bottomRight: Radius.circular(40.0),
+                      topLeft: Radius.circular(40.0) , topRight: Radius.circular(40.0),
+                    ),
                   ),
-                  borderRadius: BorderRadius.only( bottomLeft: Radius.circular(40.0), bottomRight: Radius.circular(40.0),
+                  height: 300.0,
+                  child: Column(
+                    children: [
+
+
+                      /*// ICON BUTTON DESIGN //
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only( top: 60.0 , left: 20.0),
+                            child: IconButton(onPressed: (){ navbar(); }, icon: Icon(Icons.menu , size: 30.0,)),
+                          ),
+
+                          Padding(
+                            padding: const EdgeInsets.only( top: 40.0 , left: 260.0),
+                            child: IconButton(onPressed: (){}, icon: Icon(Icons.notifications  , size: 30.0,)),
+                          ),
+                        ],
+                      ),
+                      // ICONS BUTTON DESIGN END //
+*/
+
+
+                      SizedBox( height: 50.0,),
+
+
+                      // NAME  ROW//
+                      Row(
+                        children: [
+
+                          Padding(
+                            padding: const EdgeInsets.only(left: 23.0 , top: 10.0),
+                            child: Text("Welcome \n       ${user!.displayName}" ,
+                              style: GoogleFonts.aclonica(
+                                fontSize: 30.0,
+                              ),
+
+                              /* TextStyle(
+                                fontSize: 30,
+                                fontFamily: GoogleFonts.lato,
+                              ),*/
+                            ),
+                          ),
+                        ],
+                      ),
+                      //NAME ROW END//
+
+
+                      SizedBox( height: 20.0,),
+
+
+                      //SLOGN ROW//
+                      Row(
+                        children: [
+
+                          Padding(
+                            padding: const EdgeInsets.only(left: 23.0 , top: 20.0),
+                            child: Text("Your Event Is Our \n                 First Priority" ,
+                              style:GoogleFonts.notoSerif(
+                                fontSize: 25.0,
+                              ),
+
+                              /*TextStyle(
+                                fontSize: 30,
+                                fontFamily: "dancingfont",
+                               // fontFamily: GoogleFonts.damion()
+                              ),*/
+                            ),
+                          ),
+                        ],
+                      ),
+                      //SLOGN ROW END//
+
+                    ],
                   ),
-                ),
-                height: 350.0,
-                child: Column(
-                  children: [
-
-
-                    // ICON BUTTON DESIGN //
-                    Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only( top: 60.0 , left: 20.0),
-                          child: IconButton(onPressed: (){ ZoomDrawer.of(context)?.toggle();  }, icon: Icon(Icons.menu , size: 30.0,)),
-                        ),
-
-                        Padding(
-                          padding: const EdgeInsets.only( top: 40.0 , left: 260.0),
-                          child: IconButton(onPressed: (){}, icon: Icon(Icons.notifications  , size: 30.0,)),
-                        ),
-                      ],
-                    ),
-                    // ICONS BUTTON DESIGN END //
-
-
-
-                    SizedBox( height: 20.0,),
-
-
-
-
-                    // NAME  ROW//
-                    Row(
-                      children: [
-
-                        Padding(
-                          padding: const EdgeInsets.only(left: 23.0 , top: 10.0),
-                          child: Text("Welcome \n       ${user!.displayName}" ,
-                            style: GoogleFonts.aclonica(
-                              fontSize: 30.0,
-                            ),
-
-                            /* TextStyle(
-                              fontSize: 30,
-                              fontFamily: GoogleFonts.lato,
-                            ),*/
-                          ),
-                        ),
-                      ],
-                    ),
-                    //NAME ROW END//
-
-
-                    SizedBox( height: 20.0,),
-
-
-                    //SLOGN ROW//
-                    Row(
-                      children: [
-
-                        Padding(
-                          padding: const EdgeInsets.only(left: 23.0 , top: 20.0),
-                          child: Text("Your Event Is Our \n                 First Priority" ,
-                            style:GoogleFonts.notoSerif(
-                              fontSize: 25.0,
-                            ),
-
-                            /*TextStyle(
-                              fontSize: 30,
-                              fontFamily: "dancingfont",
-                             // fontFamily: GoogleFonts.damion()
-                            ),*/
-                          ),
-                        ),
-                      ],
-                    ),
-                    //SLOGN ROW END//
-
-                  ],
                 ),
               ),
               //TOP DESIGN END//
 
 
-              SizedBox( height: 5.0,),
+              SizedBox( height: 0.0,),
 
 
               Padding(
-                padding: const EdgeInsets.only( top: 380.0 , left: 10.0),
+                padding: const EdgeInsets.only( top: 370.0 , left: 10.0),
                 child: Container(
                   height: 35.0,
                   child: Text(
@@ -191,7 +209,7 @@ class _homeState extends State<home> {
               
               // CATEGORIS DESIGN //
               Padding(
-                padding: const EdgeInsets.only( top: 440.0 , left: 10.0),
+                padding: const EdgeInsets.only( top: 420.0 , left: 10.0),
                 child: Container(
                   color: Colors.transparent,
                   height: MediaQuery.of(context).size.height,

@@ -3,7 +3,9 @@ import 'package:admin/screens/drawer.dart';
 import 'package:admin/screens/forgetpwd.dart';
 import 'package:admin/screens/home.dart';
 import 'package:admin/screens/login.dart';
+import 'package:admin/screens/navbar.dart';
 import 'package:admin/screens/phoneauth.dart';
+import 'package:admin/screens/profile.dart';
 import 'package:admin/screens/signup.dart';
 import 'package:admin/screens/splashscreen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -38,7 +40,9 @@ class MyApp extends StatelessWidget {
         '/phoneauth' : (context) => phoneauth(),
         '/home' : (context) => home(),
         '/drawer' : (context) => drawer(),
-        '/booking' : (context) => bookingdisplay( ),
+        '/booking' : (context) => bookingdisplay(),
+        '/navbar' : (context) => navbar(),
+        '/profile' : (context)=> profilepage(),
       },
     );
   }
